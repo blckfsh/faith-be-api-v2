@@ -13,12 +13,12 @@ const BibleSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 5,
-        maxlength: 3000
+        maxlength: 9999
     },
     version: {
         type: String,
         required: true,
-        minlength: 3,
+        minlength: 2,
         maxlength: 10
     },
     testament: {
@@ -36,11 +36,11 @@ const BibleSchema = new mongoose.Schema({
 
 const validateBible = bible => {
     const schema = yup.object().shape({
-        title: yup.string().required().min(3, 'Title must be greater than 3').max(50, 'Title must be less than 50'),
-        message: yup.string().required().min(5, 'Title must be greater than 5').max(3000, 'Title must be less than 3000'),
-        version: yup.string().required().min(3, 'Title must be greater than 3').max(10, 'Title must be less than 10'),
-        testament: yup.string().required().min(3, 'Title must be greater than 3').max(50, 'Title must be less than 50'),
-        status: yup.string()
+        verseTitle: yup.string().required().min(3, 'Title must be greater than 3').max(50, 'Title must be less than 50'),
+        verseMessage: yup.string().required().min(5, 'Title must be greater than 5').max(9999, 'Title must be less than 9999'),
+        verseVersion: yup.string().required().min(2, 'Title must be greater than 2').max(10, 'Title must be less than 10'),
+        verseTestament: yup.string().required().min(3, 'Title must be greater than 3').max(50, 'Title must be less than 50'),
+        verseStatus: yup.string().required()
     });
 
     return schema

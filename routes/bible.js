@@ -3,18 +3,18 @@ const router = express.Router();
 const { Bible, validateBible } = require('../models/bible');
 
 // POST: CREATE A NEW BIBLE VERSE
-router.post('/', async (req, res) => {
-    const { title, message, version, testament, status } = req.body;
+router.post("/", async (req, res) => {
+    const { verseTitle, verseMessage, verseVersion, verseTestament, verseStatus } = req.body;
 
     const error = await validateBible(req.body);
     if(error.message) res.status(400).send(error.message);
 
     bible = new Bible({
-        title,
-        message,
-        version,
-        testament,
-        status
+        title: verseTitle,
+        message: verseMessage,
+        version: verseVersion,
+        testament: verseTestament,
+        status: verseStatus
     });
 
     bible.save()
@@ -46,14 +46,14 @@ router.get("/:bibleId", async (req, res) => {
 // UPDATE BIBLE VERSE BY ID
 router.put("/:bibleId", async (req, res) => {
     const id = req.params.bibleId;
-    const { title, message, version, testament, status } = req.body;
+    const { verseTitle, verseMessage, verseVersion, verseTestament, verseStatus } = req.body;
 
-    const updatedBible = await Bible.findOneAndUpdate(id, {
-        title,
-        message,
-        version,
-        testament,
-        status
+    const updatedBible = await Bible.findByIdAndUpdate(id, {
+        title: verseTitle,
+        message: verseMessage,
+        version: verseVersion,
+        testament: verseTestament,
+        status: verseStatus
     }, {new:true, useFindAndModify: false});
     
     if (!updatedBible) res.status(404).send("Bible verse not found");
