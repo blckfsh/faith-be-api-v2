@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const yup = require('yup');
+const { boolean } = require('yup/lib/locale');
 
 // BIBLE SCHEMA
 const BibleSchema = new mongoose.Schema({
@@ -29,8 +30,8 @@ const BibleSchema = new mongoose.Schema({
 
     },
     status: {
-        type: String,
-        default: 'No'
+        type: boolean,
+        default: false
     }
 });
 
@@ -40,7 +41,7 @@ const validateBible = bible => {
         verseMessage: yup.string().required().min(5, 'Title must be greater than 5').max(9999, 'Title must be less than 9999'),
         verseVersion: yup.string().required().min(2, 'Title must be greater than 2').max(10, 'Title must be less than 10'),
         verseTestament: yup.string().required().min(3, 'Title must be greater than 3').max(50, 'Title must be less than 50'),
-        verseStatus: yup.string().required()
+        verseStatus: yup.boolean()
     });
 
     return schema
