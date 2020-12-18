@@ -45,13 +45,14 @@ router.get("/:bibleId", async (req, res) => {
 // UPDATE BIBLE VERSE BY ID
 router.put("/:bibleId", async (req, res) => {
     const id = req.params.bibleId;
-    const { verseTitle, verseMessage, verseVersion, verseTestament } = req.body;
+    const { verseTitle, verseMessage, verseVersion, verseTestament, verseStatus } = req.body;
 
     const updatedBible = await Bible.findByIdAndUpdate(id, {
         title: verseTitle,
         message: verseMessage,
         version: verseVersion,
-        testament: verseTestament
+        testament: verseTestament,
+        status: verseStatus
     }, {new:true, useFindAndModify: false});
     
     if (!updatedBible) res.status(404).send("Bible verse not found");
