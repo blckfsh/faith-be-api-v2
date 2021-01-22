@@ -18,7 +18,7 @@ const GroupSchema = new mongoose.Schema({
     },
     membersCount: {
         type: Number,
-        default: 0
+        default: 1
     },
     dateCreated: {
         type: Date,

@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
 router.get("/:groupId", async (req, res) => {
     const id = req.params.groupId;
     const group = await Group.findById(id);
-    if(!group) res.status(404).send("Group verse not found");
+    if(!group) res.status(404).send("Group not found");
     res.send(group);
 });
 
@@ -50,7 +50,7 @@ router.put("/:groupId", async (req, res) => {
         description: groupDescription
     }, {new:true, useFindAndModify: false});
     
-    if (!updatedGroup) res.status(404).send("Group verse not found");
+    if (!updatedGroup) res.status(404).send("Group not found");
     res.send(updatedGroup);
 });
 
@@ -58,7 +58,7 @@ router.put("/:groupId", async (req, res) => {
 router.delete('/:groupId', async (req, res) => {
     const id = req.params.groupId;
     const group = await Group.findByIdAndRemove(id);
-    if(!group) res.status(404).send("Group verse not found");
+    if(!group) res.status(404).send("Group not found");
     res.send(group);
 });
 

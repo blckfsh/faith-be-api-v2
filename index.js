@@ -4,6 +4,8 @@ const winston = require('winston');
 const app = express();
 const bibleRoute = require('./routes/bible');
 const groupRoute = require('./routes/group');
+const groupMemberRoute = require('./routes/group-member');
+const userRoute = require('./routes/user');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 4000;
@@ -31,6 +33,8 @@ const logger = winston.createLogger({
 // routes
 app.use('/api/bible', bibleRoute);
 app.use('/api/group', groupRoute);
+app.use('/api/group-member', groupMemberRoute);
+app.use('/api/user', userRoute);
 
 // connect to mongodb atlas
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true}).then(() => {
