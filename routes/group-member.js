@@ -1,6 +1,8 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const { GroupMember, validateGroupMember } = require('../models/group-member');
+const { isValidObjectId } = require('mongoose');
 
 // POST: ADD A USER TO A GROUP
 router.post("/", async (req, res) => {
@@ -32,12 +34,25 @@ router.get("/", (req, res) => {
         })
 });
 
-// GET THE USER BY GROUP_ID
+// GET THE USERS BY GROUP_ID
 router.get("/:groupId", async (req, res) => {
-    const id = req.params.groupId;
-    const groupMember = await GroupMember.findById(id);
-    if(!groupMember) res.status(404).send("User not found");
-    res.send(groupMember);
+
+    const id = mongoose.Types.ObjectId(req.params.groupId);
+    const groupMembers = await GroupMember.aggregate([
+        {
+            $lookup: {
+                from: "users",
+                localField: "user_id",
+                foreignField: "_id",
+                as: "members"
+            }
+        },
+        { $match: { group_id: id } },
+        { $project: { members: { name: 1 } } }
+    ])
+    
+    if(!groupMembers) res.status(404).send("Users not found");
+    res.send(groupMembers);
 });
 
 // UPDATE USER MEMBERSHIP BY ID

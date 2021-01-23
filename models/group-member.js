@@ -5,13 +5,13 @@ const { boolean } = require('yup/lib/locale');
 // GROUP MEMBER SCHEMA
 const GroupMemberSchema = new mongoose.Schema({
     group_id: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         required: true,
         minlength: 10,
         maxlength: 50
     },
     user_id: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         required: true,
         minlength: 10,
         maxlength: 50
